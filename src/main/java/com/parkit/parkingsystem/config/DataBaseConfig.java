@@ -7,13 +7,15 @@ import java.sql.*;
 
 public class DataBaseConfig {
 
+    String pass = System.getenv("MYSQL_PASS");
+
     private static final Logger logger = LogManager.getLogger("DataBaseConfig");
 
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         logger.info("Create DB connection");
         Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/prod","root","rootroot");
+                "jdbc:mysql://localhost:3306/park_it","root", pass);
     }
 
     public void closeConnection(Connection con){
