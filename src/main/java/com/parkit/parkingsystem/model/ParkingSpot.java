@@ -5,15 +5,15 @@ import lombok.Data;
 
 @Data
 public class ParkingSpot {
-
-    private int number;
+    private int id;
     private ParkingType parkingType;
     private boolean isAvailable;
 
-    public ParkingSpot(int number, ParkingType parkingType, boolean isAvailable) {
-        this.number = number;
+    public ParkingSpot(int id, ParkingType parkingType, boolean isAvailable) {
+        this.id = id;
         this.parkingType = parkingType;
         this.isAvailable = isAvailable;
     }
+
 
 }
