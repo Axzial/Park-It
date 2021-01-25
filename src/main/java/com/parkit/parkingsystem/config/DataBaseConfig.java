@@ -1,5 +1,6 @@
 package com.parkit.parkingsystem.config;
 
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,34 +26,6 @@ public class DataBaseConfig {
         Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/park_it", USERNAME, PASSWORD);
-    }
-
-    /**
-     * Close a {@link Connection}
-     * @param con {@link Connection}
-     */
-    public void closeConnection(Connection con){
-        if(con!=null){
-            try {
-                con.close();
-            } catch (SQLException e) {
-                log.error("Error while closing connection", e);
-            }
-        }
-    }
-
-    /**
-     * Close a {@link PreparedStatement}
-     * @param ps {@link PreparedStatement}
-     */
-    public void closePreparedStatement(PreparedStatement ps) {
-        if(ps!=null){
-            try {
-                ps.close();
-            } catch (SQLException e) {
-                log.error("Error while closing prepared statement",e);
-            }
-        }
     }
 
     /**

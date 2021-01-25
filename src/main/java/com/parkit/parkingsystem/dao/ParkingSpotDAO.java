@@ -38,8 +38,6 @@ public class ParkingSpotDAO extends AbstractDAO<ParkingSpot> {
         ) {
             ps.setBoolean(1, parkingSpot.isAvailable());
             ps.setInt(2, parkingSpot.getId());
-            int updateRowCount = ps.executeUpdate();
-            dataBaseConfig.closePreparedStatement(ps);
             return parkingSpot;
         } catch (Exception ex) {
             log.error("Error updating parking info", ex);
