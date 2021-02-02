@@ -49,11 +49,12 @@ public class TicketDAO extends AbstractDAO<Ticket> {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 Ticket ticket = new Ticket();
-                ticket.setId(rs.getInt(1));
+                ticket.setId(rs.getInt(2));
                 ticket.setVehicleRegNumber(vehicleRegNumber);
-                ticket.setPrice(rs.getDouble(4));
-                ticket.setInTime(rs.getTimestamp(5));
-                ticket.setOutTime(rs.getTimestamp(6));
+                ticket.setPrice(rs.getDouble(3));
+                ticket.setInTime(rs.getTimestamp(4));
+                ticket.setOutTime(rs.getTimestamp(5));
+                ticket.setParkingSpot(new ParkingSpot(rs.getInt(1), ParkingType.valueOf(rs.getString(6)), true));
                 return ticket;
             }
             dataBaseConfig.closeResultSet(rs);

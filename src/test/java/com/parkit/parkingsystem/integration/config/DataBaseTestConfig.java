@@ -21,7 +21,7 @@ public class DataBaseTestConfig extends DataBaseConfig {
         log.info("Create DB connection");
         Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/test",USERNAME,PASSWORD);
+                "jdbc:mysql://localhost:3306/park_it", USERNAME, PASSWORD);
     }
 
     public void closeConnection(Connection con){
@@ -31,17 +31,6 @@ public class DataBaseTestConfig extends DataBaseConfig {
                 log.info("Closing DB connection");
             } catch (SQLException e) {
                 log.error("Error while closing connection",e);
-            }
-        }
-    }
-
-    public void closePreparedStatement(PreparedStatement ps) {
-        if(ps!=null){
-            try {
-                ps.close();
-                log.info("Closing Prepared Statement");
-            } catch (SQLException e) {
-                log.error("Error while closing prepared statement",e);
             }
         }
     }
