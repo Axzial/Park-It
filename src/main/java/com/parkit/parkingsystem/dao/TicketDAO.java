@@ -28,6 +28,7 @@ public class TicketDAO extends AbstractDAO<Ticket> {
             ps.setDouble(3, ticket.getPrice());
             ps.setTimestamp(4, new Timestamp(ticket.getInTime().getTime()));
             ps.setTimestamp(5, (ticket.getOutTime() == null) ? null : (new Timestamp(ticket.getOutTime().getTime())));
+            ps.execute();
             return ticket;
         } catch (Exception ex) {
             log.error("Error fetching next available slot", ex);
@@ -48,13 +49,12 @@ public class TicketDAO extends AbstractDAO<Ticket> {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 Ticket ticket = new Ticket();
-                ParkingSpot parkingSpot = new ParkingSpot(rs.getInt(1), ParkingType.valueOf(rs.getString(6)), false);
-                ticket.setParkingSpot(parkingSpot);
-                ticket.setId(rs.getInt(2));
+                ticket.setId(rs.getInt(1));
                 ticket.setVehicleRegNumber(vehicleRegNumber);
-                ticket.setPrice(rs.getDouble(3));
-                ticket.setInTime(rs.getTimestamp(4));
-                ticket.setOutTime(rs.getTimestamp(5));
+                ticket.setPrice(rs.getDouble(4));
+                ticket.setInTime(rs.getTimestamp(5));
+                ticket.setOutTime(rs.getTimestamp(6));
+                return ticket;
             }
             dataBaseConfig.closeResultSet(rs);
         } catch (Exception ex) {
