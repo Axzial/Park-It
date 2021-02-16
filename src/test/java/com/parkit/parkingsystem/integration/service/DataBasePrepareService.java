@@ -1,13 +1,20 @@
 package com.parkit.parkingsystem.integration.service;
 
 import com.parkit.parkingsystem.integration.config.DataBaseTestConfig;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.sql.Connection;
 
 public class DataBasePrepareService {
 
-    DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
+    @Getter
+    @Setter
+    private DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
 
+    /**
+     * Clean all database entries
+     */
     public void clearDataBaseEntries(){
         Connection connection = null;
         try{

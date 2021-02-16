@@ -1,6 +1,8 @@
 package com.parkit.parkingsystem.integration.config;
 
 import com.parkit.parkingsystem.config.DataBaseConfig;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 import java.sql.Connection;
@@ -14,9 +16,19 @@ public class DataBaseTestConfig extends DataBaseConfig {
     /**
      * Environment Variables for Database Ids
      */
-    String PASSWORD = System.getenv("MYSQL_PASSWORD");
-    String USERNAME = System.getenv("MYSQL_USER");
+    @Getter
+    @Setter
+    private String PASSWORD = System.getenv("MYSQL_PASSWORD");
+    @Getter
+    @Setter
+    private String USERNAME = System.getenv("MYSQL_USER");
 
+    /**
+     * Get the main connection
+     * @return
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         log.info("Create DB connection");
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -24,6 +36,10 @@ public class DataBaseTestConfig extends DataBaseConfig {
                 "jdbc:mysql://localhost:3306/park_it", USERNAME, PASSWORD);
     }
 
+    /**
+     * Close the connection
+     * @param con
+     */
     public void closeConnection(Connection con){
         if(con!=null){
             try {
@@ -35,6 +51,10 @@ public class DataBaseTestConfig extends DataBaseConfig {
         }
     }
 
+    /**
+     * Close the result set
+     * @param rs {@link ResultSet}
+     */
     public void closeResultSet(ResultSet rs) {
         if(rs!=null){
             try {
