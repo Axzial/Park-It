@@ -16,8 +16,6 @@ public class FareCalculatorService {
 
         long minutes = ((out - in) / 1000) / 60;
 
-        System.out.println("OMG " + minutes);
-
         switch (ticket.getParkingSpot().getParkingType()){
             case CAR: {
                 ticket.setPrice(minutes * (Fare.CAR_RATE_PER_HOUR.getPriceHour() / 60));

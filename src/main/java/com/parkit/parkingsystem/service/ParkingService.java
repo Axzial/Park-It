@@ -43,9 +43,9 @@ public class ParkingService {
                 ticket.setInTime(inTime);
                 ticket.setOutTime(null);
                 ticketDAO.saveTicket(ticket);
-                System.out.println("Generated Ticket and saved in DB");
-                System.out.println("Please park your vehicle in spot number:" + parkingSpot.getId());
-                System.out.println("Recorded in-time for vehicle number:" + vehicleRegNumber + " is:" + inTime);
+                log.info("Generated Ticket and saved in DB");
+                log.info("Please park your vehicle in spot number:" + parkingSpot.getId());
+                log.info("Recorded in-time for vehicle number:" + vehicleRegNumber + " is:" + inTime);
             }
         } catch (Exception e) {
             log.error("Unable to process incoming vehicle", e);
@@ -53,7 +53,7 @@ public class ParkingService {
     }
 
     private String getVehichleRegNumber() throws Exception {
-        System.out.println("Please type the vehicle registration number and press enter key");
+        log.info("Please type the vehicle registration number and press enter key");
         return inputReaderUtil.readVehicleRegistrationNumber();
     }
 
@@ -77,9 +77,9 @@ public class ParkingService {
     }
 
     private ParkingType getVehichleType() {
-        System.out.println("Please select vehicle type from menu");
-        System.out.println("1 CAR");
-        System.out.println("2 BIKE");
+        log.info("Please select vehicle type from menu");
+        log.info("1 CAR");
+        log.info("2 BIKE");
         int input = inputReaderUtil.readSelection();
         switch (input) {
             case 1: {
@@ -89,7 +89,7 @@ public class ParkingService {
                 return ParkingType.BIKE;
             }
             default: {
-                System.out.println("Incorrect input provided");
+                log.info("Incorrect input provided");
                 throw new IllegalArgumentException("Entered input is invalid");
             }
         }
@@ -99,7 +99,6 @@ public class ParkingService {
         try {
             String vehicleRegNumber = getVehichleRegNumber();
             Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);
-            System.out.println("DBG -> " + ticket);
             Date outTime = new Date();
             ticket.setOutTime(outTime);
             fareCalculatorService.calculateFare(ticket);
@@ -107,10 +106,10 @@ public class ParkingService {
                 ParkingSpot parkingSpot = ticket.getParkingSpot();
                 parkingSpot.setAvailable(true);
                 parkingSpotDAO.update(parkingSpot);
-                System.out.println("Please pay the parking fare:" + ticket.getPrice());
-                System.out.println("Recorded out-time for vehicle number:" + ticket.getVehicleRegNumber() + " is:" + outTime);
+                log.info("Please pay the parking fare: " + ticket.getPrice());
+                log.info("Recorded out-time for vehicle number: " + ticket.getVehicleRegNumber() + " is:" + outTime);
             } else {
-                System.out.println("Unable to update ticket information. Error occurred");
+                log.info("Unable to update ticket information. Error occurred");
             }
         } catch (Exception e) {
             log.error("Unable to process exiting vehicle", e);
