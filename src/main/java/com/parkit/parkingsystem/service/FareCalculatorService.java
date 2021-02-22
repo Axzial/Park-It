@@ -14,7 +14,6 @@ public class FareCalculatorService {
         long in = ticket.getInTime().getTime();
         long out = ticket.getOutTime().getTime();
 
-        //TODO: Some tests are failing here. Need to check if this logic is correct
         long minutes = ((out - in) / 1000) / 60;
 
         System.out.println("OMG " + minutes);

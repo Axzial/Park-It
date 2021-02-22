@@ -8,6 +8,8 @@ import org.apache.logging.log4j.Logger;
 
 public class InteractiveShell {
 
+    private InputReaderUtil inputReaderUtil = new InputReaderUtil();
+
     private static final Logger logger = LogManager.getLogger("InteractiveShell");
 
     public static void loadInterface(){
@@ -47,6 +49,11 @@ public class InteractiveShell {
         System.out.println("1 New Vehicle Entering - Allocate Parking Space");
         System.out.println("2 Vehicle Exiting - Generate Ticket Price");
         System.out.println("3 Shutdown System");
+    }
+
+    private String getVehichleRegNumber() throws Exception {
+        System.out.println("Please type the vehicle registration number and press enter key");
+        return inputReaderUtil.readVehicleRegistrationNumber();
     }
 
 }
