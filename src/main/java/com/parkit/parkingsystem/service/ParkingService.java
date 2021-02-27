@@ -13,16 +13,17 @@ import java.util.Date;
 @Log4j
 public class ParkingService {
 
-    private static FareCalculatorService fareCalculatorService = new FareCalculatorService();
 
     private InputReaderUtil inputReaderUtil;
     private ParkingSpotDAO parkingSpotDAO;
     private TicketDAO ticketDAO;
+    private FareCalculatorService fareCalculatorService;
 
-    public ParkingService(InputReaderUtil inputReaderUtil, ParkingSpotDAO parkingSpotDAO, TicketDAO ticketDAO) {
+    public ParkingService(InputReaderUtil inputReaderUtil, ParkingSpotDAO parkingSpotDAO, TicketDAO ticketDAO, FareCalculatorService fareCalculatorService) {
         this.inputReaderUtil = inputReaderUtil;
         this.parkingSpotDAO = parkingSpotDAO;
         this.ticketDAO = ticketDAO;
+        this.fareCalculatorService = fareCalculatorService;
     }
 
     public void processIncomingVehicle() {
@@ -101,7 +102,8 @@ public class ParkingService {
             Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);
             Date outTime = new Date();
             ticket.setOutTime(outTime);
-            fareCalculatorService.calculateFare(ticket);
+            int visits = ticketDAO.countVisits(vehicleRegNumber);
+            fareCalculatorService.calculateFare(ticket, visits > 1);
             if (ticketDAO.update(ticket) != null) {
                 ParkingSpot parkingSpot = ticket.getParkingSpot();
                 parkingSpot.setAvailable(true);
