@@ -4,6 +4,7 @@ import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.dao.ParkingSpotDAO;
 import com.parkit.parkingsystem.dao.TicketDAO;
 import com.parkit.parkingsystem.integration.config.DataBaseTestConfig;
+import com.parkit.parkingsystem.integration.service.DataBasePrepareService;
 import com.parkit.parkingsystem.model.ParkingSpot;
 import com.parkit.parkingsystem.model.Ticket;
 import org.junit.jupiter.api.Assertions;
@@ -16,15 +17,15 @@ import java.time.Instant;
 
 public class TicketDaoTest {
 
-    private static DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
-    private static ParkingSpotDAO parkingSpotDAO;
+    private static final DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
     private static TicketDAO ticketDAO;
 
     @BeforeAll
     public static void beforeAll(){
+        DataBasePrepareService.clearDataBaseEntries();
         ticketDAO = new TicketDAO();
         ticketDAO.dataBaseConfig = dataBaseTestConfig;
-        parkingSpotDAO = new ParkingSpotDAO();
+        ParkingSpotDAO parkingSpotDAO = new ParkingSpotDAO();
         parkingSpotDAO.dataBaseConfig = dataBaseTestConfig;
         Ticket ticket = new Ticket();
         ticket.setId(7);
@@ -45,6 +46,11 @@ public class TicketDaoTest {
     public void testGetTicketFromRegNumber(){
         Ticket ticket = ticketDAO.getTicket("AX-ZI-AL");
         Assertions.assertEquals(1.22, ticket.getPrice());
+    }
+
+    @Test
+    public void countVistsTest(){
+
     }
 
 }

@@ -4,6 +4,7 @@ import com.parkit.parkingsystem.dao.ParkingSpotDAO;
 import com.parkit.parkingsystem.dao.TicketDAO;
 import com.parkit.parkingsystem.integration.config.DataBaseTestConfig;
 import com.parkit.parkingsystem.integration.service.DataBasePrepareService;
+import com.parkit.parkingsystem.service.FareCalculatorService;
 import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
 import lombok.SneakyThrows;
@@ -21,6 +22,7 @@ public class ParkingDataBaseIT {
     private static ParkingSpotDAO parkingSpotDAO;
     private static TicketDAO ticketDAO;
     private static DataBasePrepareService dataBasePrepareService;
+    private static FareCalculatorService fareCalculatorService;
 
     @Mock
     private static InputReaderUtil inputReaderUtil;
@@ -30,6 +32,7 @@ public class ParkingDataBaseIT {
         parkingSpotDAO = new ParkingSpotDAO();
         parkingSpotDAO.dataBaseConfig = dataBaseTestConfig;
         ticketDAO = new TicketDAO();
+        fareCalculatorService = new FareCalculatorService();
         ticketDAO.dataBaseConfig = dataBaseTestConfig;
         dataBasePrepareService = new DataBasePrepareService();
     }
@@ -49,7 +52,7 @@ public class ParkingDataBaseIT {
     @SneakyThrows
     @Test
     public void testParkingACar(){
-        ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+        ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO, fareCalculatorService);
         parkingService.processIncomingVehicle();
         Assertions.assertNotNull(ticketDAO.getTicket(inputReaderUtil.readVehicleRegistrationNumber()));
     }
@@ -58,7 +61,7 @@ public class ParkingDataBaseIT {
     @Test
     public void testParkingLotExit(){
         testParkingACar();
-        ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+        ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO, fareCalculatorService);
         parkingService.processExitingVehicle();
         Assertions.assertNotNull(ticketDAO.getTicket(inputReaderUtil.readVehicleRegistrationNumber()).getPrice());
     }
