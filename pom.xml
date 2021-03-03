@@ -138,6 +138,17 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.5</version>
+                <configuration>
+                    <excludes>
+                        <!-- Exclude class from test coverage -->
+                        <exclude>**/model/*.class</exclude>
+                        <exclude>**/util/*.class</exclude>$
+                        <exclude>**/config/*.class</exclude>
+                        <exclude>**/App.class</exclude>
+                        <exclude>**/service/InteractiveShell.class</exclude>
+                    </excludes>
+                </configuration>
+
                 <executions>
                     <execution>
                         <goals>

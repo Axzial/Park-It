@@ -1,9 +1,12 @@
 package com.parkit.parkingsystem.integration.config;
 
+import com.mysql.cj.jdbc.result.ResultSetImpl;
 import com.parkit.parkingsystem.config.DataBaseConfig;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 

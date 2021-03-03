@@ -23,10 +23,12 @@ public class TicketDaoTest {
     @BeforeAll
     public static void beforeAll(){
         DataBasePrepareService.clearDataBaseEntries();
+
         ticketDAO = new TicketDAO();
         ticketDAO.dataBaseConfig = dataBaseTestConfig;
         ParkingSpotDAO parkingSpotDAO = new ParkingSpotDAO();
         parkingSpotDAO.dataBaseConfig = dataBaseTestConfig;
+
         Ticket ticket = new Ticket();
         ticket.setId(7);
         ticket.setVehicleRegNumber("AX-ZI-AL");
@@ -34,6 +36,7 @@ public class TicketDaoTest {
         ticket.setInTime(Timestamp.from(Instant.now()));
         ticket.setOutTime(Timestamp.from(Instant.now().plusSeconds(86985)));
         ticket.setParkingSpot(new ParkingSpot(1, ParkingType.CAR, true));
+
         ticketDAO.saveTicket(ticket);
     }
 
@@ -50,7 +53,16 @@ public class TicketDaoTest {
 
     @Test
     public void countVistsTest(){
+        Assertions.assertEquals(1, ticketDAO.countVisits("AX-ZI-AL"));
+    }
 
+    @Test
+    public void updateTicketTest(){
+        Ticket ticketBefore = ticketDAO.getTicket("AX-ZI-AL");
+        ticketBefore.setVehicleRegNumber("CHANGED");
+        ticketDAO.update(ticketBefore);
+        Ticket ticketAfter = ticketDAO.getTicket("CHANGED");
+        Assertions.assertNotNull(ticketAfter);
     }
 
 }

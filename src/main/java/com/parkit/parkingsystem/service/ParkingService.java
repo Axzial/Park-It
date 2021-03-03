@@ -77,7 +77,7 @@ public class ParkingService {
         return parkingSpot;
     }
 
-    private ParkingType getVehichleType() {
+    public ParkingType getVehichleType() {
         log.info("Please select vehicle type from menu");
         log.info("1 CAR");
         log.info("2 BIKE");
