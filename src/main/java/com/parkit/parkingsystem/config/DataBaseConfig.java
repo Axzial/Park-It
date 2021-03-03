@@ -15,6 +15,8 @@ public class DataBaseConfig {
      */
     String PASSWORD = System.getenv("MYSQL_PASSWORD");
     String USERNAME = System.getenv("MYSQL_USER");
+    String HOST = System.getenv("MYSQL_HOST");
+    String DB = System.getenv("MYSQL_DB");
 
     /**
      * Open a new {@link Connection}
@@ -25,7 +27,7 @@ public class DataBaseConfig {
     public Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/park_it", USERNAME, PASSWORD);
+                "jdbc:mysql://"+HOST+"/"+DB, USERNAME, PASSWORD);
     }
 
     /**

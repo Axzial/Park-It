@@ -65,6 +65,27 @@ public class TicketDAO extends AbstractDAO<Ticket> {
     }
 
     /**
+     * Get a ticket by reg number
+     * @param vehicleRegNumber
+     * @return {@link Ticket}
+     */
+    public int countVisits(String vehicleRegNumber) {
+        try(Connection con = dataBaseConfig.getConnection();
+            PreparedStatement ps = con.prepareStatement(DBRequest.COUNT_VISITS.getRequest());
+        ) {
+            ps.setString(1, vehicleRegNumber);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            dataBaseConfig.closeResultSet(rs);
+        } catch (Exception ex) {
+            log.error("Error fetching next available slot", ex);
+        }
+        return 0;
+    }
+
+    /**
      * Update a ticket in the database
      * @param ticket
      * @param <S>

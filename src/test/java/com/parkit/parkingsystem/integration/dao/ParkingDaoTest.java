@@ -4,15 +4,19 @@ import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.dao.ParkingSpotDAO;
 import com.parkit.parkingsystem.dao.TicketDAO;
 import com.parkit.parkingsystem.integration.config.DataBaseTestConfig;
+import com.parkit.parkingsystem.integration.service.DataBasePrepareService;
 import com.parkit.parkingsystem.model.ParkingSpot;
 import com.parkit.parkingsystem.model.Ticket;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Timestamp;
 import java.time.Instant;
 
+@ExtendWith(MockitoExtension.class)
 public class ParkingDaoTest {
 
     private static DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
@@ -21,6 +25,7 @@ public class ParkingDaoTest {
 
     @BeforeAll
     public static void beforeAll(){
+        DataBasePrepareService.clearDataBaseEntries();
         ticketDAO = new TicketDAO();
         ticketDAO.dataBaseConfig = dataBaseTestConfig;
         parkingSpotDAO = new ParkingSpotDAO();
